@@ -1,11 +1,9 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Space+Mono&family=Manrope:wght@400;600&display=swap');
-
-/* ---------- Base styles ---------- */
-* { box-sizing: border-box; }
-
+/* ---- Global styles ---- */
 body {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: 'Manrope', sans-serif;
   background: linear-gradient(to top, #302b27 10%, #d98c48 50%, #87a6c2 90%);
   height: 100vh;
@@ -18,7 +16,7 @@ body {
   100% { background-position: right; }
 }
 
-/* ---------- Card ---------- */
+/* ---- Hero card ---- */
 .invite-container {
   display: flex;
   justify-content: center;
@@ -33,10 +31,10 @@ body {
 }
 
 .sunset-overlay {
-  background: rgba(0, 0, 0, 0.55);
+  background-color: rgba(0, 0, 0, 0.55);
   padding: 2rem 3rem;
   border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0,0,0,.6);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
   text-align: center;
   max-width: 600px;
   animation: riseUp 1.8s ease-out;
@@ -44,14 +42,14 @@ body {
 
 @keyframes riseUp {
   from { transform: translateY(50px); opacity: 0; }
-  to   { transform: translateY(0);   opacity: 1; }
+  to   { transform: translateY(0);    opacity: 1; }
 }
 
 .title {
   font-family: 'Playfair Display', serif;
   font-size: 3.2rem;
   color: #f5deb3;
-  margin: 0 0 .3rem;
+  margin-bottom: 0.3rem;
   letter-spacing: 1px;
 }
 
@@ -64,98 +62,92 @@ body {
 }
 
 .details {
-  font-size: 1.05rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.1rem;
   line-height: 2rem;
   color: #f8f6f3;
 }
+
 .details strong {
   color: #ffd699;
   font-weight: 600;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
 }
 
-/* ---------- Buttons ---------- */
 .rsvp-button {
   margin-top: 2rem;
-  background: #cc8800;
+  background-color: #cc8800;
   color: #fff;
   border: none;
   padding: 1rem 2.2rem;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: bold;
   cursor: pointer;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,.3);
-  transition: all .3s ease;
-}
-.rsvp-button:hover {
-  background: #e09c1a;
-  transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(0,0,0,.4);
-}
-.rsvp-button.small {
-  width: 100%;
-  margin-top: 1.25rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: all 0.25s ease;
 }
 
-/* ---------- Modal ---------- */
+.rsvp-button:hover {
+  background-color: #e09c1a;
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+/* ---- Modal ---- */
 .modal {
   position: fixed;
   inset: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0,0,0,.6);
   backdrop-filter: blur(4px);
+  background: rgba(0,0,0,.6);
   z-index: 10;
 }
+
 .hidden { display: none; }
 
 .modal-box {
   position: relative;
   background: #1d1d1d;
   padding: 2rem;
+  border-radius: 12px;
   width: 90%;
   max-width: 420px;
-  border-radius: 12px;
-  color: #fff;
-  box-shadow: 0 10px 24px rgba(0,0,0,.5);
-  animation: pop 0.4s ease;
-}
-@keyframes pop {
-  from { transform: scale(.8); opacity: 0; }
-  to   { transform: scale(1);  opacity: 1; }
+  color: #ffffff;
 }
 
 .modal-box h2 {
-  margin: 0 0 1rem;
+  margin-top: 0;
   font-family: 'Playfair Display', serif;
+  color: #ffd699;
 }
 
 .modal-box label {
   display: block;
   margin: 1rem 0;
-  font-size: .95rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.95rem;
 }
 
 .modal-box input,
 .modal-box select {
   width: 100%;
-  padding: .6rem .75rem;
+  padding: 0.5rem;
   border-radius: 6px;
   border: none;
-  margin-top: .35rem;
+  margin-top: 0.3rem;
   font-family: 'Manrope', sans-serif;
 }
 
 .close {
   background: none;
   border: none;
-  color: #fff;
-  font-size: 1.6rem;
-  line-height: 1;
+  color: #ffffff;
+  font-size: 1.4rem;
   position: absolute;
   top: 8px;
-  right: 14px;
+  right: 16px;
   cursor: pointer;
 }
