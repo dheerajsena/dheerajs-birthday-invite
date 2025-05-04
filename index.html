@@ -6,25 +6,100 @@
   <title>Sunset & Scotch</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Space+Mono&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="description" content="Join us for a birthday sundowner celebration with sunset views and scotch">
 </head>
 <body>
-  <div class="invite-container">
+  <div class="invite-container" role="main">
     <div class="sunset-overlay">
-      <h1 class="title">Sunset & Scotch</h1>
+      <h1 class="title" aria-label="Sunset and Scotch">Sunset & Scotch</h1>
       <p class="subtitle">A Birthday Sundowner</p>
-      <div class="details">
+      <div class="details" aria-label="Event Details">
         <p><strong>Date:</strong> Sunday, May 11th</p>
         <p><strong>Time:</strong> 4:00 PM – 10:00 PM (The Rooftop Lounge shuts at 10pm)</p>
         <p><strong>Venue:</strong> Level 41, 60 Kavanagh Street, Southbank</p>
         <p><strong>Dress Code:</strong> Classy Rooftop Casual</p>
       </div>
-      <button class="rsvp-button">Raise a Toast at 41 Stories Up</button>
+      <button class="rsvp-button" aria-label="Open RSVP form">Raise a Toast at 41 Stories Up</button>
+    </div>
+  </div>
+
+  <!-- Modal for RSVP -->
+  <div class="modal" id="rsvp-modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+    <div class="modal-content">
+      <button class="close-button" aria-label="Close RSVP form">&times;</button>
+      <h2 id="modal-title">RSVP</h2>
+      <form id="rsvp-form">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="guests">Number of Guests</label>
+          <select id="guests" required aria-required="true">
+            <option value="1">Just me</option>
+            <option value="2">Me + 1</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Message (Optional)</label>
+          <textarea id="message" rows="3"></textarea>
+        </div>
+        <button type="submit" class="submit-button">Confirm RSVP</button>
+      </form>
     </div>
   </div>
 
   <script>
-    document.querySelector('.rsvp-button').addEventListener('click', () => {
-      alert('Thanks for raising a toast! Your spot is saved.');
+    const modal = document.getElementById('rsvp-modal');
+    const rsvpButton = document.querySelector('.rsvp-button');
+    const closeButton = document.querySelector('.close-button');
+    const form = document.getElementById('rsvp-form');
+
+    rsvpButton.addEventListener('click', () => {
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden', 'false');
+      document.getElementById('name').focus();
+    });
+
+    closeButton.addEventListener('click', () => {
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const guests = document.getElementById('guests').value;
+      const message = document.getElementById('message').value;
+
+      // Here you would typically send this data to a server
+      console.log({ name, email, guests, message });
+      
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+      alert(`Thanks for your RSVP, ${name}! We'll see you at the sundowner.`);
+      form.reset();
+    });
+
+    // Handle keyboard accessibility
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.style.display === 'flex') {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+      }
     });
   </script>
 </body>
