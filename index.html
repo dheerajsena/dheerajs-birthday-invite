@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sunset & Scotch</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Space+Mono&family=Manrope:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="invite-container">
+    <div class="sunset-overlay">
+      <h1 class="title">Sunset & Scotch</h1>
+      <p class="subtitle">A BIRTHDAY SUNDOWNER</p>
+      <div class="details">
+        <p><strong>Date:</strong> Sunday, May 11th</p>
+        <p><strong>Time:</strong> 4:00 PM – 10:00 PM (The Rooftop shuts at 10 pm)</p>
+        <p><strong>Venue:</strong> Level 41, 60 Kavanagh Street, Southbank</p>
+        <p><strong>Dress Code:</strong> Classy Rooftop Casual</p>
+      </div>
+      <button class="rsvp-button">RSVP Now</button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal hidden">
+    <div class="modal-box">
+      <button class="close">&times;</button>
+      <h2>RSVP</h2>
+      <label for="name">Your name</label>
+      <input type="text" id="name" name="name" required />
+      <label for="rsvp">Will you attend?</label>
+      <select id="rsvp" name="rsvp" required>
+        <option value="">Choose...</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+        <option value="Maybe">Maybe</option>
+      </select>
+      <button class="submit-rsvp">Send RSVP</button>
+    </div>
+  </div>
+
+  <script>
+    const openModal = document.querySelector('.rsvp-button');
+    const closeModal = document.querySelector('.close');
+    const modal = document.querySelector('.modal');
+    const submitBtn = document.querySelector('.submit-rsvp');
+
+    openModal.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+    });
+
+    closeModal.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+
+    submitBtn.addEventListener('click', async () => {
+      const name = document.getElementById('name').value.trim();
+      const rsvp = document.getElementById('rsvp').value;
+      const ua = navigator.userAgent;
+
+      if (!name || !rsvp) {
+        alert('Please enter your name and RSVP choice.');
+        return;
+      }
+
+      const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwNFGXHPzr5li9NjJE-PRcc_vlja5hN9RBs4EHReOdXtLhLgV0ro4Y4qCR7YBZOTcBlDw/exec';
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, rsvp, ua })
+        });
+        alert('Thanks! Your RSVP is recorded.');
+        modal.classList.add('hidden');
+      } catch (err) {
+        alert('Something went wrong. Try again later.');
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
