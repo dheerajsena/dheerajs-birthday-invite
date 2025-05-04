@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sunset &amp; Scotch</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Space+Mono&family=Manrope:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="invite-container">
+    <div class="sunset-overlay">
+      <h1 class="title">Sunset &amp; Scotch</h1>
+      <p class="subtitle">A BIRTHDAY SUNDOWNER</p>
+      <div class="details">
+        <p><strong>Date:</strong> Sunday, May&nbsp;11th</p>
+        <p><strong>Time:</strong> 4:00&nbsp;PM&nbsp;–&nbsp;10:00&nbsp;PM&nbsp;(The Rooftop shuts at 10&nbsp;pm)</p>
+        <p><strong>Venue:</strong> Level&nbsp;41,&nbsp;60&nbsp;Kavanagh&nbsp;Street,&nbsp;Southbank</p>
+        <p><strong>Dress&nbsp;Code:</strong> Classy Rooftop Casual</p>
+      </div>
+      <button id="openModal" class="rsvp-button">RSVP&nbsp;Now</button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-box">
+      <button id="closeModal" class="close" aria-label="Close">&times;</button>
+      <h2>RSVP</h2>
+      <label for="guestName">Your name
+        <input type="text" id="guestName" required />
+      </label>
+
+      <label for="guestRsvp">Will you attend?
+        <select id="guestRsvp" required>
+          <option value="" disabled selected>Choose…</option>
+          <option value="yes">Yes – See you there!</option>
+          <option value="maybe">Maybe</option>
+          <option value="no">No, can’t make it</option>
+        </select>
+      </label>
+
+      <button id="submitRsvp" class="rsvp-button">Send RSVP</button>
+    </div>
+  </div>
+
+<script>
+const modal      = document.getElementById('modal');
+const openBtn    = document.getElementById('openModal');
+const closeBtn   = document.getElementById('closeModal');
+const submitBtn  = document.getElementById('submitRsvp');
+const nameInput  = document.getElementById('guestName');
+const rsvpSelect = document.getElementById('guestRsvp');
+
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwNFGXHPzr5li9NjJE-PRcc_vlja5hN9RBs4EHReOdXtLhLgV0ro4Y4qCR7YBZOTcBlDw/exec';
+
+openBtn.addEventListener('click', () => modal.classList.remove('hidden'));
+closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+
+submitBtn.addEventListener('click', async () => {
+  const name = nameInput.value.trim();
+  const rsvp = rsvpSelect.value;
+
+  if (!name || !rsvp) {
+    alert('Please fill in your name and RSVP choice 🙂');
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending…';
+
+  try {
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        rsvp,
+        ua: navigator.userAgent
+      })
+    });
+    alert('🎉 Thanks! Your RSVP is recorded.');
+    modal.classList.add('hidden');
+    nameInput.value = '';
+    rsvpSelect.value = '';
+  } catch (err) {
+    console.error(err);
+    alert('Oops, something went wrong. Please try again.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send RSVP';
+  }
+});
+</script>
+</body>
+</html>
